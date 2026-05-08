@@ -1,142 +1,63 @@
-<!DOCTYPE html><html
-dir="ltr" lang="en-US"><head><link
-rel='stylesheet' href="code/style.css" type='text/css' media='screen' /><meta
-charset="UTF-8" /><title>AES 128/256</title><link
-rel="shortcut icon" href="files/favicon.ico" /><meta
-name="description" content="AES 128/256"/><meta
-name="keywords" content="aes encryption,encrypt aes,aes decryption,aes encryptor,aes decryptor,what is aes,aes algorithm"/><link
-rel="canonical" href="AES256.html" />
-<script type='text/javascript' src="code/jquery.js"></script>
-<script type="text/javascript" src="code/extra.js"></script>
-<script type="text/javascript" src="code/jquery.min.js"></script>
-<script type="text/javascript" src="code/jquery-ui.min.js"></script>
-<script type="text/javascript" src="code/form.js"></script> 
-<script type="text/javascript" src="code/aes.js"></script> 
-<!-- <script src="code/jquery-ui.js"></script> -->
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>AES 128 / 256</title>
+	<meta name="description" content="Browser-based AES-GCM encryption and decryption. All operations are local — nothing is sent to a server.">
+	<link rel="stylesheet" href="code/style.css">
+</head>
+<body>
+	<header>
+		<div class="header-inner">
+			<a href="/" class="logo-link" aria-label="Home">
+				<img src="files/logo.png" alt="" width="52" height="52">
+			</a>
+			<span class="site-title">AES 128 / 256</span>
+		</div>
+	</header>
 
+	<main>
+		<div class="card">
+			<div class="field">
+				<label for="InputText">Plaintext / Ciphertext</label>
+				<textarea id="InputText" rows="8" spellcheck="false" autocomplete="off" placeholder="Enter text to encrypt, or paste ciphertext to decrypt…"></textarea>
+			</div>
 
-<style>
-body #header_wrapper
-{
-	background: #1a1a1a url('') no-repeat top center;
-}
-body #header_pattern
-{
-	background: transparent url('') repeat;
-}
-body.home #header_wrapper
-{
-	background: #1a1a1a url('') no-repeat top center;
-}
-body.home #header_pattern
-{
-	background: transparent url('') repeat;
-}
-#menu_wrapper .nav ul li > a, #menu_wrapper div .nav li > 
-a
-{
-	color: #ffffff;
-}  
-h1,h2,h3,h4,h5,h6,h1.tagline_header { color:#555555; }
-h1 { font-size:38px; }
-h2 { font-size:34px; }
-h3 { font-size:30px; }
-h4 { font-size:28px; }
-h5 { font-size:24px; }
-h6 { font-size:22px; }
-body { color:#666666; }
-a { color:#21749b; }
-a:hover, a:active { color:#3587ad; }
-input[type=submit], input[type=button], a.button {
-	background: #07418d;
-	background: -webkit-gradient(linear, left top, left bottom, from(#83a0c6), to(#07418d));
-	background: -moz-linear-gradient(top,  #83a0c6,  #07418d);
-	filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#83a0c6', endColorstr='#07418d');
-}
-input[type=submit]:active, input[type=button]:active, a.button:active
-{
-	background: #07418d;
-	background: -webkit-gradient(linear, left top, left bottom, from(#07418d), to(#83a0c6));
-	background: -moz-linear-gradient(top,  #07418d,  #83a0c6);
-	filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#83a0c6', endColorstr='#07418d');
-}
-input[type=submit], input[type=button], a.button {
-	color: #ffffff;
-}
-input[type=submit]:hover, input[type=button]:hover, a.button:hover
-{
-	color: #ffffff;
-}
-input[type=submit], input[type=button], a.button {
-	border: 1px solid #07418d;
-}
-#footer, #footer ul { color:#cccccc; }
-#footer a { color:#ffffff; }
-#footer a:hover, #footer a:active { color:#ffffff; }</style></head>
+			<div class="field-row">
+				<div class="field">
+					<label for="EncryptionKey">Password</label>
+					<input id="EncryptionKey" type="password" autocomplete="off" placeholder="Enter password">
+				</div>
+				<div class="field field-narrow">
+					<label for="Bit">Key size</label>
+					<select id="Bit">
+						<option value="128">128-bit</option>
+						<option value="256" selected>256-bit</option>
+					</select>
+				</div>
+			</div>
 
-<body
-class="page page-id-522 page-template page-template-page-everpassword-php"><div
-id="wrapper"><div
-id="header_wrapper"><div
-id="top_bar"><div
-class="logo"> 
-<a id="custom_logo" href=""><img
-src="files/logo.png" alt="" width="65" height="65" /></a></div>
-<div id="menu_wrapper">
-<div class="menu-mainmenu-container"><ul
-id="main_menu" class="nav"><li
-id="menu-item-593" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-593"><a
-href="/">Home</a></li>
-<li
-id="menu-item-8" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-8">
-</li></ul></div></div></div> <br
+			<div class="actions">
+				<button id="EncryptButton" type="button">Encrypt</button>
+				<button id="DecryptButton" type="button">Decrypt</button>
+			</div>
 
-class="clear"/><div
-class="page_caption"><div
-class="caption_inner"><div
-class="caption_header"><h1 class="cufon">AES 128/256</h1></div></div></div><div
-id="header_pattern"></div></div><div
-id="content_wrapper">
-<div
-class="inner"><div
-class="inner_wrapper"><div
-class="TTWForm-container"><form
-class="TTWForm">
+			<div id="ResultContainer" hidden>
+				<div class="field">
+					<label>Result</label>
+					<pre id="OutputText"></pre>
+				</div>
+				<div class="actions">
+					<button id="CopyButton" type="button">Copy to clipboard</button>
+				</div>
+			</div>
+		</div>
 
-<div
-class="field f_100"> Plain / Encrypted Text<br
-/><textarea  id="InputText" rows="10" cols="75"></textarea></div><div
-class="field f_75"  style="display:inline-block; clear:none;"> Password <input
-id="EncryptionKey" type="text" name="firstname" /></div><div
-class="field f_25" style="display:inline-block; float:right; clear:none; margin-top:18px"> <select
-id="Bit"><option
-value="128">128 Bit</option><option
-value="256">256 Bit</option> </select></div><div
-class="field f_100 clearfix submit"> <input
-id="DecryptButton" value="Decrypt" type="button"> <input
-id="EncryptButton" value="Encrypt" type="button" style="margin-right:20px"></div><div
-class="field f_100">
-<div
-id="ResultContainer"><h5>Result Encrypted Text</h5><pre><div id="OutputText"></div></pre></div></div></form></div> 
-<br
-class="clear" /><br/> 
+		<p class="notice">All encryption and decryption is performed locally in your browser. Data is never sent to a server.</p>
+	</main>
 
-<script type="text/javascript">$("#EncryptButton").click(function() {
-	GibberishAES.size(parseInt($("#Bit").val()));
-	$("#OutputText").html(GibberishAES.enc($("#InputText").val(), $("#EncryptionKey").val()));
-	$("#ResultContainer").slideDown("slow");
-    });
-    $("#DecryptButton").click(function() {
-	GibberishAES.size(parseInt($("#Bit").val()));
-	$("#OutputText").html(GibberishAES.dec($("#InputText").val(), $("#EncryptionKey").val()));
-	$("#ResultContainer").slideDown("slow");
-    });</script> <p>
-
- 
-<div id="copyright"> Copyright - All Rights Reserved<br>
-Note: Data is NOT sent to Server. Thanks to Java via LocalHost.</br></div>
-
-
-</div> </div> </div> </div>
+	<script src="code/crypto.js"></script>
+	<script src="code/app.js"></script>
 </body>
 </html>
