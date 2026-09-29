@@ -38,6 +38,27 @@
 				</div>
 			</div>
 
+			<fieldset class="mode-fieldset field">
+				<legend>Encryption mode</legend>
+				<div class="mode-switch">
+					<label class="mode-option">
+						<input type="radio" name="EncryptionMode" value="password" checked>
+						<span>Password only</span>
+					</label>
+					<label class="mode-option">
+						<input type="radio" name="EncryptionMode" value="security-key">
+						<span>Security Key</span>
+					</label>
+				</div>
+			</fieldset>
+
+			<div id="SecurityKeyPanel" class="field" hidden>
+				<div class="security-key-controls">
+					<button id="PairKeyButton" type="button">Pair security key</button>
+					<span id="SecurityKeyStatus" class="security-key-status" role="status" aria-live="polite"></span>
+				</div>
+			</div>
+
 			<div class="actions">
 				<button id="EncryptButton" type="button">Encrypt</button>
 				<button id="DecryptButton" type="button">Decrypt</button>
